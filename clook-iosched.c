@@ -8,11 +8,6 @@
 #include <linux/slab.h>
 #include <linux/init.h>
 
-<<<<<<< HEAD
- 
-=======
-
->>>>>>> ed076e9d9d25633df063fed599b9f6d42b9e1dfb
 char rW = 'R';
 
 struct clook_data {
