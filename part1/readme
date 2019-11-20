@@ -1,0 +1,4 @@
+Type make to compile the code.
+To run the code type ./simpleprogram, click enter and input an int; which will represent the number of threads to create.
+If you type 0 or a non int the code returns nothing. If you type in 4.3 then the code rounds it off as 4.
+To run the sync version of part 1 comment out any line that has #ifdef and #endif.

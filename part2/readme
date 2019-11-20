@@ -1,0 +1,6 @@
+Type make to compile the code.
+To run the you type ./fib argc; argc representing the integers of fib numbers you want the program  to output.
+If you type 0 or a non int the code returns nothing. If you type 1 or 2 the code just prints 0 and 0 1 respectively. If you type 4.3 the program rounds it off as 4.
+
+
+
