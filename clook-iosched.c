@@ -81,7 +81,7 @@ clook_latter_request(struct request_queue *q, struct request *rq)
 	return list_entry(rq->queuelist.next, struct request, queuelist);
 }
 
-static int /*void */clook_init_queue(struct request_queue *q)
+static int /*void*/clook_init_queue(struct request_queue *q)
 {
 	struct clook_data *nd;
 
