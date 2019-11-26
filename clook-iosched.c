@@ -8,7 +8,7 @@
 #include <linux/slab.h>
 #include <linux/init.h>
 
-char rW = 'R';
+//char rW = 'R';
 
 struct clook_data {
 	struct list_head queue; //List of pending requests
@@ -33,6 +33,7 @@ static int clook_dispatch(struct request_queue *q, int force)
 		list_del_init(&rq->queuelist);
 		//printk("[CLOOK] dsp [%c] [%lu]", rW, blk_rq_pos(rq)); 
 		elv_dispatch_sort(q, rq);
+		char rW = (rq_data_dir(rq) & REQ_WRITE) ? 'W' : 'R';
 		printk("[CLOOK] dsp [%c] [%lu]\n", rW, blk_rq_pos(rq));
 		return 1;
 	}
@@ -51,6 +52,7 @@ static void clook_add_request(struct request_queue *q, struct request *rq)
 		}
 	}
 	list_add_tail(&rq->queuelist, head);//Add request to the end
+	char rW = (rq_data_dir(rq) & REQ_WRITE) ? 'W' : 'R';
 	printk("[CLOOK] add [%c] [%lu]\n", rW, blk_rq_pos(rq));
 }
 
@@ -79,17 +81,17 @@ clook_latter_request(struct request_queue *q, struct request *rq)
 	return list_entry(rq->queuelist.next, struct request, queuelist);
 }
 
-static /*int*/ void *clook_init_queue(struct request_queue *q)
+static int /*void */clook_init_queue(struct request_queue *q)
 {
 	struct clook_data *nd;
 
 	nd = kmalloc_node(sizeof(*nd), GFP_KERNEL, q->node);
 	if (!nd)
-		return NULL;//-ENOMEM;
+		return /*NULL;*/-ENOMEM;
 
 	INIT_LIST_HEAD(&nd->queue);
 	//q->elevator->elevator_data = nd;
-	return nd;//0;
+	return /*nd;*/0;
 }
 
 static void clook_exit_queue(struct elevator_queue *e)
@@ -105,7 +107,7 @@ static struct elevator_type elevator_clook = {
 		.elevator_merge_req_fn		= clook_merged_requests,
 		.elevator_dispatch_fn		= clook_dispatch,
 		.elevator_add_req_fn		= clook_add_request,
-		.elevator_queue_empty_fn	=clook_queue_empty,
+//		.elevator_queue_empty_fn	=clook_queue_empty,
 		.elevator_former_req_fn		= clook_former_request,
 		.elevator_latter_req_fn		= clook_latter_request,
 		.elevator_init_fn		= clook_init_queue,
