@@ -56,10 +56,10 @@ static void clook_add_request(struct request_queue *q, struct request *rq)
 	printk("[CLOOK] add [%c] [%lu]\n", rW, blk_rq_pos(rq));
 }
 
-static int clook_queue_empty(struct request_queue *q){
+/*static int clook_queue_empty(struct request_queue *q){
 	struct clook_data *nd = q->elevator->elevator_data;
 	return list_empty(&nd->queue);
-}
+}*/
 
 static struct request *
 clook_former_request(struct request_queue *q, struct request *rq)
